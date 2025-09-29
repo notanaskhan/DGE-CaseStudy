@@ -1,0 +1,19 @@
+Collecting neo4j
+  Downloading neo4j-5.28.2-py3-none-any.whl.metadata (5.9 kB)
+Collecting python-levenshtein
+  Downloading python_levenshtein-0.27.1-py3-none-any.whl.metadata (3.7 kB)
+Collecting fuzzywuzzy
+  Downloading fuzzywuzzy-0.18.0-py2.py3-none-any.whl.metadata (4.9 kB)
+Requirement already satisfied: pytz in ./.venv/lib/python3.9/site-packages (from neo4j) (2025.2)
+Collecting Levenshtein==0.27.1 (from python-levenshtein)
+  Downloading levenshtein-0.27.1-cp39-cp39-macosx_11_0_arm64.whl.metadata (3.6 kB)
+Collecting rapidfuzz<4.0.0,>=3.9.0 (from Levenshtein==0.27.1->python-levenshtein)
+  Using cached rapidfuzz-3.13.0-cp39-cp39-macosx_11_0_arm64.whl.metadata (12 kB)
+Downloading neo4j-5.28.2-py3-none-any.whl (313 kB)
+Downloading python_levenshtein-0.27.1-py3-none-any.whl (9.4 kB)
+Downloading levenshtein-0.27.1-cp39-cp39-macosx_11_0_arm64.whl (156 kB)
+Using cached rapidfuzz-3.13.0-cp39-cp39-macosx_11_0_arm64.whl (1.5 MB)
+Downloading fuzzywuzzy-0.18.0-py2.py3-none-any.whl (18 kB)
+Installing collected packages: fuzzywuzzy, rapidfuzz, neo4j, Levenshtein, python-levenshtein
+
+Successfully installed Levenshtein-0.27.1 fuzzywuzzy-0.18.0 neo4j-5.28.2 python-levenshtein-0.27.1 rapidfuzz-3.13.0
