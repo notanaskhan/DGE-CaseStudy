@@ -439,35 +439,41 @@ class ChatService:
     def _create_application(self, data: ConversationData) -> str:
         """Create application using existing system."""
         # Import here to avoid circular imports
-        from ..database import DatabaseSession, Application, Document
+        from ..main import SessionLocal, Application, Document
         import uuid
 
+        db = SessionLocal()
         try:
-            with DatabaseSession() as db:
-                app_id = str(uuid.uuid4())
-                app_row = Application(
-                    id=app_id,
-                    name=data.name,
-                    emirates_id=data.emirates_id,
-                    declared_monthly_income=data.declared_monthly_income,
-                    household_size=data.household_size,
-                    channel=data.channel,
-                    status="RECEIVED",
+            app_id = str(uuid.uuid4())
+            app_row = Application(
+                id=app_id,
+                name=data.name,
+                emirates_id=data.emirates_id,
+                declared_monthly_income=data.declared_monthly_income,
+                household_size=data.household_size,
+                channel=data.channel,
+                status="RECEIVED",
+            )
+            db.add(app_row)
+
+            # Add documents
+            for doc_path in data.documents:
+                doc = Document(
+                    id=str(uuid.uuid4()),
+                    application_id=app_id,
+                    path=doc_path,
+                    filename=os.path.basename(doc_path)
                 )
-                db.add(app_row)
+                db.add(doc)
 
-                # Add documents
-                for doc_path in data.documents:
-                    doc = Document(
-                        id=str(uuid.uuid4()),
-                        application_id=app_id,
-                        path=doc_path,
-                        filename=os.path.basename(doc_path)
-                    )
-                    db.add(doc)
+            db.commit()
+            return app_id
 
-                # Session automatically commits/rollbacks via context manager
-                return app_id
+        except Exception as e:
+            db.rollback()
+            raise e
+        finally:
+            db.close()
 
     def _get_progress_summary(self, session: ChatSession) -> Dict[str, Any]:
         """Get summary of data collection progress."""
